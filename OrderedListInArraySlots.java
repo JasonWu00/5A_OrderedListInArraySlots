@@ -65,6 +65,17 @@ public class OrderedListInArraySlots {
     filledElements++;
   }
 
+  public void addLinear(int value) {
+    int position = 0;
+    int ticker = 0;
+    for(ticker = 0; ticker < size(); ticker++) {
+      if (elements[ticker] < value)
+        position++;
+    }
+    add(position, value);
+    filledElements++;
+  }
+
   public void testing(int value) {
     System.out.println(findProperIndex(elements, 3, size()));
   }
@@ -79,32 +90,37 @@ public class OrderedListInArraySlots {
     //special cases: if array has only 0 or 1 elements
     if (size() == 0)
       output = 0;
+      //if empty array, insert at index 0
     else if (size() == 1) {
       if (array[0] > value)
         output = 0;
       else
         output = 1;
+      //insert value before or after the only element
     }
     else {
       int[] frontHalf = Arrays.copyOfRange(array, 0, array.length/2 );
       int[] backHalf = Arrays.copyOfRange(array, array.length/2 +1, array.length);
 
       if (elements[position] <= value && elements[position+1] >= value) {
+        //if the prev element is smaller and next element is bigger
         if (elements[position] > value) {
           output = position;
         }
         else {
           output = position + 1;
-        }
+        }//putting value before or after the current element
       }
 
       else if (elements[position] < value && elements[position+1] < value){ //recursive case
         newCurrentPosition = (int) (output * 0.5);
-        output += findProperIndex(frontHalf, value, newCurrentPosition);
+        output = findProperIndex(frontHalf, value, newCurrentPosition);
+        //recursive case: find proper index for the front half of list
       }
       else{
         newCurrentPosition = (int) (output * 0.5);
-        output = findProperIndex(backHalf, value, newCurrentPosition);
+        output += findProperIndex(backHalf, value, newCurrentPosition);
+        //recursive case: find proper index for back half of list
       }
     }
     return output;

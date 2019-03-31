@@ -10,10 +10,11 @@ public class UserOf_OrderedListInArraySlots {
 
     int elemIndex;
     for( elemIndex = 0; elemIndex < 5; elemIndex++ ) {
-        list.add( elemIndex); // differs from index, but similar
+        list.addLinear( elemIndex); // differs from index, but similar
         System.out.println( "number of elements: " + list.size() );
     }
 
     System.out.println("initial population of " + list.size() + " elements:");
+    System.out.println( list + System.lineSeparator());
   }
 }
